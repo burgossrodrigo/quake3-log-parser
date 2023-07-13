@@ -1,3 +1,9 @@
+## To run:
+### npm i && npm start
+
+## To test:
+### npm test
+
 ## Function Documentation
 
 ### handleCauseOfDeath
