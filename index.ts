@@ -29,28 +29,28 @@ const formatKill = (message: string, resEntries: ResEntry[]) => {
         const currentEntry = resEntries[resEntries.length - 1][newEntryKey];
 
         if (currentEntry) {
-            const killer = handleMurder(message); // Get the name of the killer
+            const killer = handleMurder(message);
             const kills = currentEntry.kills;
-            kills[killer] = (kills[killer] || 0) - 1; // Increment the kill count for the killer
+            kills[killer] = (kills[killer] || 0) - 1;
             currentEntry.total_kills += 1;
 
-            const causeOfDeath = handleCauseOfDeath(message); // Get the cause of death
+            const causeOfDeath = handleCauseOfDeath(message);
             const killsByMeans = currentEntry.kills_by_means;
-            killsByMeans[causeOfDeath] = (killsByMeans[causeOfDeath] || 0) + 1; // Increment the kill count by means
+            killsByMeans[causeOfDeath] = (killsByMeans[causeOfDeath] || 0) + 1;
         }
     } else {
         const newEntryKey: string = `game_${resEntries.length}`;
         const currentEntry = resEntries[resEntries.length - 1][newEntryKey];
 
         if (currentEntry) {
-            const killer = handleMurder(message); // Get the name of the killer
+            const killer = handleMurder(message);
             const kills = currentEntry.kills;
-            kills[killer] = (kills[killer] || 0) + 1; // Increment the kill count for the killer
-            currentEntry.total_kills += 1; // Increment the total kill count
+            kills[killer] = (kills[killer] || 0) + 1;
+            currentEntry.total_kills += 1;
 
-            const causeOfDeath = handleCauseOfDeath(message); // Get the cause of death
+            const causeOfDeath = handleCauseOfDeath(message);
             const killsByMeans = currentEntry.kills_by_means;
-            killsByMeans[causeOfDeath] = (killsByMeans[causeOfDeath] || 0) + 1; // Increment the kill count by means
+            killsByMeans[causeOfDeath] = (killsByMeans[causeOfDeath] || 0) + 1;
         }
     }
 };
@@ -62,7 +62,7 @@ export const handleMurder = (message: string): string | any => {
       const match = message.match(regex);
   
       if (match) {
-        const killedPlayer = match[1].trim(); // Trim leading/trailing spaces
+        const killedPlayer = match[1].trim()
         return killedPlayer;
       }
     } else {
@@ -70,14 +70,14 @@ export const handleMurder = (message: string): string | any => {
       const match = message.match(regex);
   
       if (match) {
-        const killer = match[1].trim(); // Trim leading/trailing spaces
+        const killer = match[1].trim();
         return killer;
       }
     }
   };
 
   export const handleCauseOfDeath = (message: string): string => {
-    const regex = /by\s(\w+)/; // Match the word after 'by'
+    const regex = /by\s(\w+)/; 
     const match = message.match(regex);
     const causeOfDeath = match ? match[1] : '';
   
