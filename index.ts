@@ -56,32 +56,36 @@ const formatKill = (message: string, resEntries: ResEntry[]) => {
 };
 
 
-const handleMurder = (message: string): string | any => {
-    console.log(message)
+export const handleMurder = (message: string): string | any => {
     if (message.includes('<world>')) {
-        const regex = /killed\s+(.+?)\s+by/; // Updated regular expression pattern
-        const match = message.match(regex); // Perform the match
-
-        if (match) {
-            const killedPlayer = match[1]; // Extract the matched word
-            return killedPlayer; // Output: Dono da Bola
-        }
+      const regex = /killed\s+(.+?)\s+by/;
+      const match = message.match(regex);
+  
+      if (match) {
+        const killedPlayer = match[1].trim(); // Trim leading/trailing spaces
+        console.log(killedPlayer, 'killed player');
+        return killedPlayer;
+      }
     } else {
-        const parts = message.split(' ');
-        const killer = parts[3]; // The killer's name is at index 3 in the parts array
+      const regex = /killed\s+(.+?)\s+by/;
+      const match = message.match(regex);
+  
+      if (match) {
+        const killer = match[1].trim(); // Trim leading/trailing spaces
+        console.log(killer, 'killer');
         return killer;
+      }
     }
-};
+  };
 
 const handleCauseOfDeath = (message: string) => {
     const words = message.split(' ');
     const causeOfDeath = words[words.length - 1];
-    console.log(causeOfDeath, 'causeofDeath')
     return causeOfDeath
 }
 
 const handleNewClient = (message: string, resEntries: ResEntry[]) => {
-    const startIndex = message.indexOf('n\\') + 2; // Adding 2 to skip 'n\'
+    const startIndex = message.indexOf('n\\') + 2;
     const nextWord = message.substring(startIndex).split('\\')[0];
     const newEntryKey: string = `game_${resEntries.length}`;
 
@@ -93,16 +97,13 @@ const handleNewClient = (message: string, resEntries: ResEntry[]) => {
 
     // Remove duplicates from players array
     currentEntry.players = [...new Set(currentEntry.players)];
-
-    console.log(resEntries);
 };
 
 const parseLogEntries = (): LogEntry[] | any => {
     try {
-        const data = fs.readFileSync(filePath, 'utf-8');
-        // Process the file data
+        const data = fs.readFileSync(filePath, 'utf-8')
         let logContent = data;
-        const logEntries = logContent.split('\n'); // Split into log entries
+        const logEntries = logContent.split('\n')
         const parsedLogs: LogEntry[] = [];
 
         for (const entry of logEntries) {
@@ -130,7 +131,6 @@ const parseLogEntries = (): LogEntry[] | any => {
 export const handleLogEntries = () => {
     const resEntries: ResEntry[] = [];
     const parsedEntries = parseLogEntries();
-    console.log(parsedEntries);
 
     for (const entry of parsedEntries) {
         let newEntryKey;
@@ -147,19 +147,19 @@ export const handleLogEntries = () => {
                     }
                 };
                 resEntries.push(newEntry);
-                break; // Add break statement here
+                break;
 
             case 'Kill:':
                 formatKill(entry.message, resEntries);
-                break; // Add break statement here
+                break;
 
-            // Add more cases for other log entry types
+
             case 'ClientUserinfoChanged:':
                 handleNewClient(entry.message, resEntries)
                 break;
 
             default:
-                // Handle other log entry types
+
                 break;
         }
     }
@@ -167,5 +167,5 @@ export const handleLogEntries = () => {
     return JSON.stringify(resEntries)
 }
 
-console.log(handleLogEntries())
+handleLogEntries()
 
