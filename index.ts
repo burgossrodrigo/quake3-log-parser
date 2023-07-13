@@ -81,7 +81,6 @@ export const handleMurder = (message: string): string | any => {
     const match = message.match(regex);
     const causeOfDeath = match ? match[1] : '';
   
-    console.log(causeOfDeath); // Log the cause of death for debugging
   
     return causeOfDeath;
   };
@@ -123,7 +122,6 @@ const parseLogEntries = (): LogEntry[] | any => {
 
             parsedLogs.push(logEntry);
         }
-
         return parsedLogs
     } catch (err) {
         console.error('Error reading file:', err);
@@ -169,5 +167,5 @@ export const handleLogEntries = () => {
     return JSON.stringify(resEntries)
 }
 
-handleLogEntries()
+console.log(handleLogEntries()) 
 
