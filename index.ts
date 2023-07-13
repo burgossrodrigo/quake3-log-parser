@@ -63,7 +63,6 @@ export const handleMurder = (message: string): string | any => {
   
       if (match) {
         const killedPlayer = match[1].trim(); // Trim leading/trailing spaces
-        console.log(killedPlayer, 'killed player');
         return killedPlayer;
       }
     } else {
@@ -72,17 +71,20 @@ export const handleMurder = (message: string): string | any => {
   
       if (match) {
         const killer = match[1].trim(); // Trim leading/trailing spaces
-        console.log(killer, 'killer');
         return killer;
       }
     }
   };
 
-const handleCauseOfDeath = (message: string) => {
-    const words = message.split(' ');
-    const causeOfDeath = words[words.length - 1];
-    return causeOfDeath
-}
+  export const handleCauseOfDeath = (message: string): string => {
+    const regex = /by\s(\w+)/; // Match the word after 'by'
+    const match = message.match(regex);
+    const causeOfDeath = match ? match[1] : '';
+  
+    console.log(causeOfDeath); // Log the cause of death for debugging
+  
+    return causeOfDeath;
+  };
 
 const handleNewClient = (message: string, resEntries: ResEntry[]) => {
     const startIndex = message.indexOf('n\\') + 2;

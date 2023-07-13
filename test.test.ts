@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha'
-import { ResEntry, handleLogEntries, handleMurder } from '.'
+import { ResEntry, handleCauseOfDeath, handleLogEntries, handleMurder } from '.'
 
 describe('Test ResData', () => {
   it('should calculate correct total kills and sum of kills by means for all game entries', () => {
@@ -23,7 +23,7 @@ describe('Test ResData', () => {
     }
   });
 
-  it('Should return the name of the killer given the message from the log or MOD_FALLING if the killer is <world>', () => {
+  it('Should return the name of the killer given the message from the log or the name of the victm if the killer is <world>', () => {
     const message0 = 'Zeh killed Isgalamido by MOD_ROCKET message'
     const message1 = '<world> killed Zeh by MOD_TRIGGER_HURT message'
     const resEntries0 = handleMurder(message0);
@@ -34,4 +34,17 @@ describe('Test ResData', () => {
     expect(resEntries1).to.equal('Zeh');
     
   });
+
+  it('Should return the cause of death', () => {
+    const message2 = 'Zeh killed Isgalamido by MOD_ROCKET message';
+    const message3 = '<world> killed Zeh by MOD_TRIGGER_HURT message';
+    
+    const resEntries2 = handleCauseOfDeath(message2);
+    const resEntries3 = handleCauseOfDeath(message3);
+
+
+    expect(resEntries2).to.equal('MOD_ROCKET');
+    expect(resEntries3).to.equal('MOD_TRIGGER_HURT');
+  });
+
 });
