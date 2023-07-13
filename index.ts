@@ -96,7 +96,6 @@ const handleNewClient = (message: string, resEntries: ResEntry[]) => {
         currentEntry.players.push(nextWord);
     }
 
-    // Remove duplicates from players array
     currentEntry.players = [...new Set(currentEntry.players)];
 };
 
@@ -164,7 +163,7 @@ export const handleLogEntries = () => {
         }
     }
 
-    return JSON.stringify(resEntries)
+    return JSON.stringify(resEntries, null, 2)
 }
 
 console.log(handleLogEntries()) 
